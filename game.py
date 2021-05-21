@@ -13,19 +13,20 @@ apple, baby, back, ball, bear, bed, bell, bird, birthday, boat, box, boy, bread,
 wordlist_raw = sightwords.split(',')
 wordlist_raw = [x.strip() for x in wordlist_raw]
 wordlist = filter(lambda x: x!='', wordlist_raw)
-
+wordlist = list(wordlist)
 
 #print(list(wordlist))
 
 screen = turtle.Screen()
 SCREENW = 1000
 SCREENH = 800
+COOKIE = 'cookie.gif'
 GAP = 20
 XDIM = 4
 YDIM = 4
 FONTSIZE = 48
 screen.setup(SCREENW, SCREENH)
-
+newgame = True
 BOXWIDTH =  (SCREENW - 2*GAP) / XDIM
 BOXHEIGHT = (SCREENH - 2*GAP) / YDIM
 
@@ -33,6 +34,18 @@ turtle.title("Cookie Game")
 turtle.speed(0)
 turtle.tracer(0,0)
 turtle.hideturtle()
+screen.addshape(COOKIE)
+
+pos_list = []
+fortune_pos = (0,0)
+
+def draw_cookie(row, col):
+    startx =  -BOXWIDTH * ( XDIM / 2)
+    starty =  -BOXHEIGHT * ( YDIM / 2 )
+    turtle.setpos(startx + row*BOXWIDTH + BOXWIDTH/2, starty + col*BOXHEIGHT + BOXHEIGHT/2)
+    turtle.shape(COOKIE)
+    turtle.showturtle()
+    
 
 def draw_line(sx, sy, ex, ey, clr):
     turtle.color(clr)
@@ -47,8 +60,29 @@ def draw_text(txt, x, y, clr):
     turtle.setpos(x, y)
     turtle.write(txt, align="center", font=("Arial", FONTSIZE, "bold"))
 
-def draw_grid(clr):
-    words = random.sample(list(wordlist), XDIM*YDIM)
+def erase_word(row, col):
+    startx =  -BOXWIDTH * ( XDIM / 2) + row*BOXWIDTH + GAP
+    starty =  -BOXHEIGHT * ( YDIM / 2 ) + col*BOXHEIGHT + GAP
+    turtle.setpos(startx, starty)
+    turtle.fillcolor('light grey')
+    turtle.begin_fill()
+    for i in range(2):
+        turtle.forward(BOXWIDTH - GAP * 2)
+        turtle.left(90)
+        turtle.forward(BOXHEIGHT - GAP * 2)
+        turtle.left(90)
+    turtle.end_fill()
+
+def setup_grid(clr):
+    global fortune_pos
+    global newgame
+  
+    turtle.clear()
+    turtle.speed(0)
+    turtle.tracer(0,0)
+    turtle.hideturtle()
+    newgame = True
+    words = random.sample(wordlist, XDIM*YDIM)
     startx =  -BOXWIDTH * ( XDIM / 2)
     starty =  -BOXHEIGHT * ( YDIM / 2 )
     width = BOXWIDTH * XDIM
@@ -58,14 +92,43 @@ def draw_grid(clr):
     for j in range(XDIM + 1):
         draw_line(startx + j*BOXWIDTH, starty, startx + j*BOXWIDTH, starty + height, clr)
     cnt = 0
+    pos_list = []
     for i in range(YDIM):
         for j in range(XDIM):
+            pos_list.append((i,j))
             x = startx + j*BOXWIDTH + BOXWIDTH/2
             y = starty + i*BOXHEIGHT + BOXHEIGHT/2
             draw_text(words[cnt], x, y, 'blue')
             cnt += 1
+    fortune_pos = random.choice(pos_list)
+    print(fortune_pos)
 
-draw_grid('red')
+def grid_click(x,y):
+    # print(x,y)
+    global fortune_pos
+    global newgame
+    startx =  -BOXWIDTH * ( XDIM / 2)
+    starty =  -BOXHEIGHT * ( YDIM / 2 )
+    row = int((x - startx ) / BOXWIDTH)
+    col = int((y - starty ) / BOXHEIGHT)
+    turtle.goto(x, y)
+    if (row,col) == fortune_pos:
+        if newgame:
+            newgame = False
+            draw_text("You Win the Cookie !!!\nClick the cookie to restart", 0, 0, 'red')
+            draw_cookie(row, col)
+            turtle.update()
+        else:
+            setup_grid('red')
+            turtle.update()
+    else:
+        erase_word(row, col)
+    #turtle.write(str(row)+","+str(col))
+
+setup_grid('red')
+#draw_cookie(0, 0)
+#erase_word(0, 0)
 turtle.update()
+screen.onclick(grid_click)
 
-turtle.done()
+screen.mainloop()
