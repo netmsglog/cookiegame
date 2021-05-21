@@ -2,4 +2,4 @@
 
 sight word cookie game
 
-randomly hide one word within cookies, click to reveal by turn
+randomly hide one cookie behind a sight word, click to reveal by turn

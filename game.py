@@ -23,7 +23,7 @@ SCREENH = 800
 COOKIE = 'cookie.gif'
 GAP = 20
 XDIM = 4
-YDIM = 4
+YDIM = 3
 FONTSIZE = 48
 screen.setup(SCREENW, SCREENH)
 newgame = True
@@ -95,7 +95,7 @@ def setup_grid(clr):
     pos_list = []
     for i in range(YDIM):
         for j in range(XDIM):
-            pos_list.append((i,j))
+            pos_list.append((j,i))
             x = startx + j*BOXWIDTH + BOXWIDTH/2
             y = starty + i*BOXHEIGHT + BOXHEIGHT/2
             draw_text(words[cnt], x, y, 'blue')
@@ -111,6 +111,7 @@ def grid_click(x,y):
     starty =  -BOXHEIGHT * ( YDIM / 2 )
     row = int((x - startx ) / BOXWIDTH)
     col = int((y - starty ) / BOXHEIGHT)
+    print('clicked:',row,col)
     turtle.goto(x, y)
     if (row,col) == fortune_pos:
         if newgame:
