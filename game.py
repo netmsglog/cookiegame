@@ -1,5 +1,6 @@
 import turtle
 import random
+from playsound import playsound
 
 sightwords = '''
 a, and, away, big, blue, can, come, down, find, for, funny, go, help, here, I, in, is, it, jump, little, look, make, me, my, not, one, play, red, run, said, see, the, three, to, two, up, we, where, yellow, you,
@@ -101,7 +102,7 @@ def setup_grid(clr):
             draw_text(words[cnt], x, y, 'blue')
             cnt += 1
     fortune_pos = random.choice(pos_list)
-    print(fortune_pos)
+    #print(fortune_pos)
 
 def grid_click(x,y):
     # print(x,y)
@@ -111,7 +112,7 @@ def grid_click(x,y):
     starty =  -BOXHEIGHT * ( YDIM / 2 )
     row = int((x - startx ) / BOXWIDTH)
     col = int((y - starty ) / BOXHEIGHT)
-    print('clicked:',row,col)
+    #print('clicked:',row,col)
     turtle.goto(x, y)
     if (row,col) == fortune_pos:
         if newgame:
@@ -119,11 +120,13 @@ def grid_click(x,y):
             draw_text("You Win the Cookie !!!\nClick the cookie to restart", 0, 0, 'red')
             draw_cookie(row, col)
             turtle.update()
+            playsound('cookie.mp3', False)
         else:
             setup_grid('red')
             turtle.update()
     else:
         erase_word(row, col)
+        playsound('ding.wav', False)
     #turtle.write(str(row)+","+str(col))
 
 setup_grid('red')
