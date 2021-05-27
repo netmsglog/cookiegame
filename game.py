@@ -26,7 +26,7 @@ GAP = 20
 XDIM = 4
 YDIM = 3
 FONTSIZE = 48
-FORNUMS = 3
+FORNUMS = 4
 screen.setup(SCREENW, SCREENH)
 newgame = True
 BOXWIDTH =  (SCREENW - 2*GAP) / XDIM

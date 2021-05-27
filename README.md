@@ -1,8 +1,10 @@
 # cookiegame
 
-sight word cookie game
+- sight word cookie game
 
-randomly hide one cookie behind a sight word, click to reveal by turn
+    randomly hide one cookie behind a sight word, click to reveal by turn
+
+- bingo ooxx game
 
 On Mac for using sound:
 
