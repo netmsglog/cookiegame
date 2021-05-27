@@ -1,4 +1,5 @@
 import turtle
+from playsound import playsound
 
 screen = turtle.Screen()
 screen.setup(800,800)
@@ -104,12 +105,15 @@ def play(x,y):
     draw(b)
     r = gameover(b)
     if r==1:
+        playsound('xwin.mp3', False)
         screen.textinput("Game over!","X won!")
         restart()
     elif r==2:
+        playsound('owin.mp3', False)
         screen.textinput("Game over!","O won!")
         restart()
     elif r==3:
+        playsound('bingo.mp3', False)
         screen.textinput("Game over!", "Tie!")
         restart()
     
