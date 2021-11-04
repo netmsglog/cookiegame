@@ -105,15 +105,15 @@ def play(x,y):
     draw(b)
     r = gameover(b)
     if r==1:
-        playsound('xwin.mp3', False)
+        playsound('xwin.mp3', True)
         screen.textinput("Game over!","X won!")
         restart()
     elif r==2:
-        playsound('owin.mp3', False)
+        playsound('owin.mp3', True)
         screen.textinput("Game over!","O won!")
         restart()
     elif r==3:
-        playsound('bingo.mp3', False)
+        playsound('bingo.mp3', True)
         screen.textinput("Game over!", "Tie!")
         restart()
     

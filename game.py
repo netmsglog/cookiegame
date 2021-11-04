@@ -156,11 +156,11 @@ def grid_click(x,y):
             if check_over():
                 draw_text("All Cookies are Found !!!", 0, 0, 'red')
             turtle.update()
-            playsound('cookie.mp3', False)
+            playsound('cookie.mp3', True)  # unblock playsound not working on windows 11
         
     else:
         erase_word(row, col)
-        playsound('ding.wav', False)
+        playsound('ding.wav', True)
     #turtle.write(str(row)+","+str(col))
 
 setup_grid('red')
